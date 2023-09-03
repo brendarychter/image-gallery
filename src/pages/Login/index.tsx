@@ -114,6 +114,7 @@ export default function Login() {
                     variant="solid"
                     colorScheme="purple"
                     width="full"
+                    isLoading={message !== ''}
                   >
                     Login
                   </Button>
