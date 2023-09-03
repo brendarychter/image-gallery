@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import {
@@ -10,16 +9,17 @@ import {
   Stack,
   Box,
   FormControl,
-  FormLabel,
+  Text,
   InputRightElement,
   Spinner
 } from '@chakra-ui/react';
 import { useUserContext } from '@/context/UserContext';
+import { LoginMessage } from '@/types';
 
 export default function Login() {
   const navigate = useNavigate();
   const [spinner, showSpinner] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -52,9 +52,10 @@ export default function Login() {
     e.preventDefault();
     if (validateUser() && validatePassword()) {
       updateUser('loggedIn', true);
-      navigate('/gallery');
+      setMessage(LoginMessage.SUCCESS);
+      setTimeout(() => navigate('/gallery'), 1000);
     } else {
-      setError('Check the data');
+      setMessage(LoginMessage.ERROR);
     }
   };
 
@@ -83,7 +84,7 @@ export default function Login() {
             <Heading color="white.500">Image gallery app</Heading>
             <Box minW={{ base: '90%', md: '468px' }}>
               <form onSubmit={(e) => validateAuth(e)}>
-                <Stack spacing={4} p="1rem" boxShadow="md">
+                <Stack spacing={4} p="1rem">
                   <FormControl>
                     <Input
                       type="text"
@@ -106,7 +107,6 @@ export default function Login() {
                         </Button>
                       </InputRightElement>
                     </InputGroup>
-                    <FormLabel>{error}</FormLabel>
                   </FormControl>
                   <Button
                     borderRadius={2}
@@ -117,6 +117,7 @@ export default function Login() {
                   >
                     Login
                   </Button>
+                  <Text align="center">{message}</Text>
                 </Stack>
               </form>
             </Box>

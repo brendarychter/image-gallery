@@ -21,3 +21,8 @@ export type UserContextType = {
   user: User;
   updateUser: (prop: string, value: string | boolean) => void;
 };
+
+export enum LoginMessage {
+  ERROR = 'Error. Check the data',
+  SUCCESS = 'Login successful! Redirecting to home...'
+}
