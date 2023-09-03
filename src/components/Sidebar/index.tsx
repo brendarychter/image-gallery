@@ -1,10 +1,7 @@
-import { useState } from 'react';
-
-export default function Navbar() {
-
-
+export default function Sidebar() {
   return (
     <>
+      <div>Sidebar</div>
     </>
   );
 }

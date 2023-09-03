@@ -1,7 +1,7 @@
 export interface User {
-  id: number;
   name: string;
   password: string;
+  loggedIn: boolean;
 }
 
 export interface Picture {

@@ -5,15 +5,22 @@ import {
   Route,
   RouterProvider
 } from 'react-router-dom';
-import { Home, Gallery, UserGallery } from '@/pages';
-import Layout from '@/layout';
+import { Login, Gallery, UserGallery } from '@/pages';
+import ProtectedRoutes from '@/ProtectedRoutes';
+
+// TODO: create errorboundary component
+function ErrorBoundary() {
+  return <div>error</div>;
+}
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route index element={<Home />} />
-      <Route path="/gallery" element={<Gallery />} />
-      <Route path="/user-gallery" element={<UserGallery />} />
+    <Route errorElement={<ErrorBoundary />}>
+      <Route path="/" element={<Login />} />
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/user-gallery" element={<UserGallery />} />
+      </Route>
     </Route>
   )
 );
