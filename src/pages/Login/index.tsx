@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import {
@@ -14,7 +15,6 @@ import {
   Spinner
 } from '@chakra-ui/react';
 import { useUserContext } from '@/context/UserContext';
-import { User } from '@/types';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,7 +24,10 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
 
-  const { name, password, setUser } = useUserContext();
+  const {
+    user: { name, password },
+    updateUser
+  } = useUserContext();
 
   useEffect(() => {
     showSpinner(false);
@@ -32,7 +35,6 @@ export default function Login() {
       JSON.parse(localStorage.getItem('loggedIn')!) === null ? '/' : '/gallery';
     navigate(URL);
   }, []);
-
 
   const validateUser = () => {
     return /^[a-z]+$/.test(name);
@@ -49,14 +51,15 @@ export default function Login() {
   const validateAuth = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateUser() && validatePassword()) {
-      setUser((user: User) => ({
-        ...user,
-        loggedIn: true
-      }));
+      updateUser('loggedIn', true);
       navigate('/gallery');
     } else {
       setError('Check the data');
     }
+  };
+
+  const handleChange = (prop: string, value: string) => {
+    updateUser(prop, value);
   };
 
   return (
@@ -85,12 +88,7 @@ export default function Login() {
                     <Input
                       type="text"
                       placeholder="Username"
-                      onChange={(e) =>
-                        setUser((user: User) => ({
-                          ...user,
-                          name: e.target.value
-                        }))
-                      }
+                      onChange={(e) => handleChange('name', e.target.value)}
                     />
                   </FormControl>
                   <FormControl>
@@ -99,10 +97,7 @@ export default function Login() {
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Password"
                         onChange={(e) =>
-                          setUser((user: User) => ({
-                            ...user,
-                            password: e.target.value
-                          }))
+                          handleChange('password', e.target.value)
                         }
                       />
                       <InputRightElement width="4.5rem">

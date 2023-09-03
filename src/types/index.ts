@@ -12,3 +12,12 @@ export interface Picture {
   url: string;
   download_url: string;
 }
+
+export interface PropsChildren {
+  children?: React.ReactNode;
+}
+
+export type UserContextType = {
+  user: User;
+  updateUser: (prop: string, value: string | boolean) => void;
+};

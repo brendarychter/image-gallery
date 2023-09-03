@@ -1,27 +1,35 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { User } from '@/types';
+import { User, UserContextType, PropsChildren } from '@/types';
 
-const UserContext = createContext<any>(null);
+const userInitialState = {
+  password: '',
+  name: '',
+  loggedIn: JSON.parse(localStorage.getItem('loggedIn')!)
+};
 
-interface Authentication {
-  children?: React.ReactNode;
-}
+const UserContext = createContext<UserContextType>({
+  user: userInitialState,
+  updateUser: () => {}
+});
 
-export const UserProvider = ({ children }: Authentication) => {
-  const [user, setUser] = useState<User>({
-    password: '',
-    name: '',
-    loggedIn: JSON.parse(localStorage.getItem('loggedIn')!),
-  });
+export const UserProvider = ({ children }: PropsChildren) => {
+  const [user, setUser] = useState<User>(userInitialState);
 
-  const { password, name, loggedIn } = user;
-  
-  useEffect(()=>{
-    localStorage.setItem('loggedIn', JSON.stringify(loggedIn))
-  }, [loggedIn])
+  const { loggedIn } = user;
+
+  useEffect(() => {
+    localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
+  }, [loggedIn]);
+
+  const updateUser = (prop: string, value: string | boolean) => {
+    setUser((user: User) => ({
+      ...user,
+      [prop]: value
+    }));
+  };
 
   return (
-    <UserContext.Provider value={{ password, name, loggedIn, setUser }}>
+    <UserContext.Provider value={{ user, updateUser }}>
       {children}
     </UserContext.Provider>
   );
