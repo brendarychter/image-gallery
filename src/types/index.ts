@@ -12,6 +12,11 @@ export interface Picture {
   url: string;
   download_url: string;
   favorite: boolean;
+  thumbnail: string;
+}
+
+export interface Pictures {
+  pictures: Picture[];
 }
 
 export interface PropsChildren {

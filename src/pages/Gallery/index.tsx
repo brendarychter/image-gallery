@@ -1,15 +1,10 @@
-import PictureCard from '@/components/PictureCard';
-import { Picture } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { SimpleGrid, Spinner } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
+import { PictureGrid } from '@/components';
+import { getPictures } from '@/api';
 
 export default function Gallery() {
-  const getPictures = (pageParam: number): Promise<Picture[]> =>
-    fetch(`https://picsum.photos/v2/list/?limit=10&page=${pageParam}`).then(
-      (res) => res.json()
-    );
-
   const { isLoading, isError, error, data, hasNextPage, fetchNextPage } =
     useInfiniteQuery(
       ['pictures'],
@@ -42,12 +37,12 @@ export default function Gallery() {
         hasMore={!!hasNextPage}
         loader={<Spinner />}
       >
-        <SimpleGrid minChildWidth="200px" spacing="30px" padding="20px">
-          {pictures &&
-            pictures.map((picture: Picture) => (
-              <PictureCard key={picture.id} {...picture} />
-            ))}
-        </SimpleGrid>
+        {pictures ? (
+          <PictureGrid pictures={pictures} />
+        ) : (
+          // {/* TODO: mensaje de no hay imagenes para mostrar */}
+          <div>no hay imagenes para mostrar, probar mas tarde</div>
+        )}
       </InfiniteScroll>
     </>
   );

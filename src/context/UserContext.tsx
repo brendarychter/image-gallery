@@ -16,7 +16,6 @@ const UserContext = createContext<UserContextType>({
 
 export const UserProvider = ({ children }: PropsChildren) => {
   const [user, setUser] = useState<User>(userInitialState);
-
   const { loggedIn, name } = user;
 
   useEffect(() => {
