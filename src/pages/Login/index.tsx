@@ -31,8 +31,8 @@ export default function Login() {
 
   useEffect(() => {
     showSpinner(false);
-    const URL =
-      JSON.parse(localStorage.getItem('loggedIn')!) === null ? '/' : '/gallery';
+    const { loggedIn } = JSON.parse(localStorage.getItem('user')!);
+    const URL = !loggedIn ? '/' : '/gallery';
     navigate(URL);
   }, []);
 
@@ -103,7 +103,7 @@ export default function Login() {
                       />
                       <InputRightElement width="4.5rem">
                         <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                          {showPassword ? 'Hide' : 'Show'}
+                          {showPassword ? 'Ocultar' : 'Ver'}
                         </Button>
                       </InputRightElement>
                     </InputGroup>

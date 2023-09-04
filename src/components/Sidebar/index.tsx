@@ -16,10 +16,12 @@ import { FiMenu } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { useUserContext } from '@/context/UserContext';
 import { FaHome, FaHeart } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
 interface LinkItemProps {
   name: string;
   icon?: IconType;
+  url: string;
 }
 
 interface SidebarProps extends BoxProps {
@@ -27,6 +29,7 @@ interface SidebarProps extends BoxProps {
 }
 
 interface NavItemProps extends FlexProps {
+  url: string;
   icon?: IconType;
 }
 
@@ -54,14 +57,14 @@ export default function SimpleSidebar() {
     </Box>
   );
 }
+const LinkItems: Array<LinkItemProps> = [
+  { name: 'Inicio', icon: FaHome, url: '/gallery' },
+  { name: 'Mis favoritas', icon: FaHeart, url: '/user-gallery' },
+  { name: 'Cerrar sesión', url: '/' }
+];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { user } = useUserContext();
-  const LinkItems: Array<LinkItemProps> = [
-    { name: 'Inicio', icon: FaHome },
-    { name: 'Mis favoritas', icon: FaHeart },
-    { name: 'Cerrar sesión' }
-  ];
 
   return (
     <Box
@@ -84,7 +87,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} url={link.url} onClick={onClose}>
           {link.name}
         </NavItem>
       ))}
@@ -92,40 +95,37 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ url, icon, children, ...rest }: NavItemProps) => {
   return (
-    <Box
-      as="a"
-      href="#"
-      style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}
-    >
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'purple.400',
-          color: 'white'
-        }}
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: 'white'
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Box>
+    <NavLink to={url}>
+      <Box style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+        <Flex
+          align="center"
+          p="4"
+          mx="4"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          _hover={{
+            bg: 'purple.400',
+            color: 'white'
+          }}
+          {...rest}
+        >
+          {icon && (
+            <Icon
+              mr="4"
+              fontSize="16"
+              _groupHover={{
+                color: 'white'
+              }}
+              as={icon}
+            />
+          )}
+          {children}
+        </Flex>
+      </Box>
+    </NavLink>
   );
 };
 

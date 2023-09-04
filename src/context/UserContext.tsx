@@ -1,10 +1,12 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { User, UserContextType, PropsChildren } from '@/types';
 
+const storage = JSON.parse(localStorage.getItem('user')!);
+
 const userInitialState = {
   password: '',
-  name: '',
-  loggedIn: JSON.parse(localStorage.getItem('loggedIn')!)
+  name: storage !== null ? storage.name : '',
+  loggedIn: storage !== null ? storage.loggedIn : false
 };
 
 const UserContext = createContext<UserContextType>({
@@ -15,10 +17,13 @@ const UserContext = createContext<UserContextType>({
 export const UserProvider = ({ children }: PropsChildren) => {
   const [user, setUser] = useState<User>(userInitialState);
 
-  const { loggedIn } = user;
+  const { loggedIn, name } = user;
 
   useEffect(() => {
-    localStorage.setItem('loggedIn', JSON.stringify(loggedIn));
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ name: name, loggedIn: loggedIn })
+    );
   }, [loggedIn]);
 
   const updateUser = (prop: string, value: string | boolean) => {

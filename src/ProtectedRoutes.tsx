@@ -2,8 +2,8 @@ import { Outlet, Navigate, useLocation } from 'react-router';
 import Sidebar from '@/components/Sidebar'
 
 const useAuth = () => {
-  const data = JSON.parse(localStorage.getItem('loggedIn')!);
-  return data;
+  const {loggedIn} = JSON.parse(localStorage.getItem('user')!);
+  return loggedIn;
 };
 
 const ProtectedRoutes = () => {
