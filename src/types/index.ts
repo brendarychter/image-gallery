@@ -11,6 +11,7 @@ export interface Picture {
   height: number;
   url: string;
   download_url: string;
+  favorite: boolean;
 }
 
 export interface PropsChildren {
@@ -23,6 +24,6 @@ export type UserContextType = {
 };
 
 export enum LoginMessage {
-  ERROR = 'Error. Check the data',
-  SUCCESS = 'Login successful! Redirecting to home...'
+  ERROR = 'Verifique los datos ingresados',
+  SUCCESS = 'Login exitoso! Ingresando...'
 }

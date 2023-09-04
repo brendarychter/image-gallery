@@ -25,7 +25,7 @@ export default function Login() {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const {
-    user: { name, password },
+    user: { name, password, loggedIn },
     updateUser
   } = useUserContext();
 
@@ -82,13 +82,13 @@ export default function Login() {
             alignItems="center"
           >
             <Heading color="white.500">Image gallery app</Heading>
-            <Box minW={{ base: '90%', md: '468px' }}>
+            <Box minW={{ base: '90%', md: '400px' }}>
               <form onSubmit={(e) => validateAuth(e)}>
                 <Stack spacing={4} p="1rem">
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Username"
+                      placeholder="Usuario"
                       onChange={(e) => handleChange('name', e.target.value)}
                     />
                   </FormControl>
@@ -96,7 +96,7 @@ export default function Login() {
                     <InputGroup>
                       <Input
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Password"
+                        placeholder="Contraseña"
                         onChange={(e) =>
                           handleChange('password', e.target.value)
                         }
@@ -114,7 +114,7 @@ export default function Login() {
                     variant="solid"
                     colorScheme="purple"
                     width="full"
-                    isLoading={message !== ''}
+                    isLoading={loggedIn}
                   >
                     Login
                   </Button>
