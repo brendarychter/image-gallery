@@ -4,6 +4,7 @@ import { getPicture } from '@/api';
 import { PictureCard } from '@/components';
 import { Box, IconButton, Spinner } from '@chakra-ui/react';
 import { FaArrowLeft } from 'react-icons/fa';
+import { ViewType } from '@/types';
 
 export default function Detail() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ export default function Detail() {
   );
 
   if (isLoading) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   if (isError) return <h4>{`${error}` as string}</h4>;
@@ -30,7 +31,7 @@ export default function Detail() {
           icon={<FaArrowLeft color="white" />}
           onClick={() => navigate(-1)}
         />
-        <PictureCard key={id} {...data}/>
+        {data && <PictureCard picture={data} view={ViewType.DETAIL} />}
       </Box>
     </>
   );

@@ -8,17 +8,16 @@ import {
   useToast
 } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { usePictureContext } from '@/context/PictureContext';
+import { ViewType, PictureCardType } from '@/types';
 
-export default function PictureCard(picture: any) {
+export default function PictureCard({ picture, view }: PictureCardType) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isDetail = location.pathname.includes('/gallery/image');
-  const isFavorites = location.pathname.includes('/favorites');
-
+  const isDetail = view === ViewType.DETAIL;
+  const isFavorites = view === ViewType.FAVORITES;
   const toast = useToast();
-
+  
   const {
     id,
     author,
@@ -31,14 +30,13 @@ export default function PictureCard(picture: any) {
 
   const { addPicture, removePicture } = usePictureContext();
 
-  // get vista. si es detail, mostrar
+  // TODO: get vista. si es detail, mostrar
   const handleFavorite = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    console.log(favorite)
     if (favorite) {
-      // if vista no es gallery
+      // TODO: if vista no es gallery
       removePicture(id);
       console.log('show alert');
     } else {
