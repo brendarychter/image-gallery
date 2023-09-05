@@ -5,8 +5,8 @@ const storage = JSON.parse(localStorage.getItem('user')!);
 
 const userInitialState = {
   password: '',
-  name: storage !== null ? storage.name : '',
-  loggedIn: storage !== null ? storage.loggedIn : false
+  name: storage === null ? '' : storage.name,
+  loggedIn: storage === null ? false : storage.loggedIn
 };
 
 const UserContext = createContext<UserContextType>({

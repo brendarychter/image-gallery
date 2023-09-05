@@ -14,7 +14,7 @@ export interface RawPicture {
 }
 
 export interface Picture {
-  id: number;
+  id: string;
   author: string;
   width: number;
   height: number;
@@ -22,7 +22,6 @@ export interface Picture {
   download_url: string;
   favorite: boolean;
   thumbnail: string;
-  detail: boolean;
 }
 
 export interface Pictures {

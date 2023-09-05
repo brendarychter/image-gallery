@@ -22,6 +22,7 @@ interface LinkItemProps {
   name: string;
   icon?: IconType;
   url: string;
+  action?: () => void;
 }
 
 interface SidebarProps extends BoxProps {
@@ -59,9 +60,14 @@ export default function SimpleSidebar() {
 }
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Inicio', icon: FaHome, url: '/gallery' },
-  { name: 'Mis favoritas', icon: FaHeart, url: '/user-gallery' },
-  { name: 'Cerrar sesión', url: '/' }
+  { name: 'Mis favoritas', icon: FaHeart, url: '/favorites' },
+  { name: 'Cerrar sesión', url: '/', action: () => localStorage.clear() }
 ];
+
+const handleClick = (action: any, onClose: any) => {
+  onClose();
+  if (action) action();
+};
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { user } = useUserContext();
@@ -87,7 +93,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} url={link.url} onClick={onClose}>
+        <NavItem
+          key={link.name}
+          icon={link.icon}
+          url={link.url}
+          onClick={() => handleClick(link.action, onClose)}
+        >
           {link.name}
         </NavItem>
       ))}

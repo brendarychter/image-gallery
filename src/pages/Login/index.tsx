@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import {
   Flex,
+  Box,
   Heading,
   Input,
   Button,
   InputGroup,
   Stack,
-  Box,
   FormControl,
   Text,
   InputRightElement,
@@ -20,6 +20,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [spinner, showSpinner] = useState<boolean>(true);
   const [message, setMessage] = useState<string>('');
+  const storage = JSON.parse(localStorage.getItem('user')!);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -30,9 +31,9 @@ export default function Login() {
   } = useUserContext();
 
   useEffect(() => {
+    console.log(loggedIn, name)
     showSpinner(false);
-    const { loggedIn } = JSON.parse(localStorage.getItem('user')!);
-    const URL = !loggedIn ? '/' : '/gallery';
+    const URL = storage !== null && storage.loggedIn ? '/gallery' : '/';
     navigate(URL);
   }, []);
 
@@ -101,7 +102,7 @@ export default function Login() {
                           handleChange('password', e.target.value)
                         }
                       />
-                      <InputRightElement width="4.5rem">
+                      <InputRightElement width="5rem">
                         <Button h="1.75rem" size="sm" onClick={handleShowClick}>
                           {showPassword ? 'Ocultar' : 'Ver'}
                         </Button>

@@ -13,7 +13,6 @@ export default function Detail() {
     getPicture(Number(id))
   );
 
-  console.log(data)
   if (isLoading) {
     return <Spinner/>;
   }
@@ -31,7 +30,7 @@ export default function Detail() {
           icon={<FaArrowLeft color="white" />}
           onClick={() => navigate(-1)}
         />
-        <PictureCard key={id} {...data} />
+        <PictureCard key={id} {...data}/>
       </Box>
     </>
   );
