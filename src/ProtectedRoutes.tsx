@@ -1,5 +1,5 @@
 import { Outlet, Navigate, useLocation } from 'react-router';
-import Sidebar from '@/components/Sidebar';
+import { Sidebar } from '@/components';
 
 const useAuth = () => {
   const { loggedIn } = JSON.parse(localStorage.getItem('user')!);

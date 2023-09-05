@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider
 } from 'react-router-dom';
-import { Login, Gallery, UserGallery, Picture } from '@/pages';
+import { Login, Gallery, UserGallery, Detail } from '@/pages';
 import ProtectedRoutes from '@/ProtectedRoutes';
 
 // TODO: create errorboundary component
@@ -20,7 +20,7 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoutes />}>
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/user-gallery" element={<UserGallery />} />
-        <Route path="/image/id/:id" element={<Picture />} />
+        <Route path="/gallery/image/:id" element={<Detail />} />
       </Route>
     </Route>
   )

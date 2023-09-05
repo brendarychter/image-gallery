@@ -4,38 +4,39 @@ import {
   Image,
   Stack,
   Heading,
-  IconButton
+  IconButton,
 } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
-import { Picture } from '@/types';
+// import { Picture } from '@/types';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function PictureCard({
+  id,
   author,
+  width,
+  height,
   thumbnail,
-  download_url
-}: Picture) {
-  //Recibir picture mas la data de donde viene
-  console.log(download_url);
+  download_url,
+  detail
+}: any) {
+  const navigate = useNavigate();
 
-  const redirectToPictureDetail = ()=>{
-    console.log('redirect a unico')
-  }
-
-  const handleFavorite =  (e: any) => {
+  const handleFavorite = (e: any) => {
     e.stopPropagation();
-    console.log('add to favorites if is card. remove if is view')
-  }
+    console.log('add to favorites if is card');
+  };
+
 
   return (
     <Card
-      maxW="sm"
-      cursor="pointer"
-      _hover={{ transform: 'scale(1.05)' }}
-      onClick={() => redirectToPictureDetail()}
+      maxW="600px"
+      cursor={detail ? 'default' : 'pointer'}
+      _hover={detail ? undefined : { transform: 'scale(1.05)' }}
+      onClick={detail ? undefined : () => navigate(`/gallery/image/${id}`)}
     >
       <CardBody position="relative">
         <Image
-          src={thumbnail}
+          src={detail ? download_url : thumbnail}
           display="block"
           objectFit="cover"
           alt={author}
@@ -54,11 +55,25 @@ export default function PictureCard({
           right="0"
           fontSize="20px"
           icon={<FaHeart color="white" />}
-          onClick={(e)=>handleFavorite(e)}
+          onClick={(e) => handleFavorite(e)}
         />
         <Stack mt="6" spacing="3">
           <Heading size="md">{author}</Heading>
         </Stack>
+        {detail && (
+          <Stack mt="6" spacing="3">
+            <Heading size="md">Alto: {width}</Heading>
+            <Heading size="md">Largo: {height}</Heading>
+            <Link
+              to={download_url}
+              download={author}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Descargar
+            </Link>
+          </Stack>
+        )}
       </CardBody>
     </Card>
   );

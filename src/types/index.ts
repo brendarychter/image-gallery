@@ -4,6 +4,15 @@ export interface User {
   loggedIn: boolean;
 }
 
+export interface RawPicture {
+  id: number;
+  author: string;
+  width: number;
+  height: number;
+  url: string;
+  download_url: string;
+}
+
 export interface Picture {
   id: number;
   author: string;
@@ -13,6 +22,7 @@ export interface Picture {
   download_url: string;
   favorite: boolean;
   thumbnail: string;
+  detail: boolean;
 }
 
 export interface Pictures {
