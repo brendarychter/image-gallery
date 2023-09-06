@@ -20,7 +20,6 @@ export default function Login() {
   const navigate = useNavigate();
   const [spinner, showSpinner] = useState<boolean>(true);
   const [message, setMessage] = useState<string>('');
-  const storage = JSON.parse(localStorage.getItem('user')!);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -31,9 +30,8 @@ export default function Login() {
   } = useUserContext();
 
   useEffect(() => {
-    console.log(loggedIn, name)
     showSpinner(false);
-    const URL = storage !== null && storage.loggedIn ? '/gallery' : '/';
+    const URL = loggedIn ? '/gallery' : '/';
     navigate(URL);
   }, []);
 

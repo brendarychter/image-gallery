@@ -1,21 +1,24 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { User, UserContextType, PropsChildren } from '@/types';
 
-const storage = JSON.parse(localStorage.getItem('user')!);
-
 const userInitialState = {
   password: '',
-  name: storage === null ? '' : storage.name,
-  loggedIn: storage === null ? false : storage.loggedIn
+  name: '',
+  loggedIn: false
 };
 
 const UserContext = createContext<UserContextType>({
   user: userInitialState,
-  updateUser: () => {}
+  updateUser: () => {},
+  clearStorage: () => {}
 });
 
 export const UserProvider = ({ children }: PropsChildren) => {
-  const [user, setUser] = useState<User>(userInitialState);
+  const [user, setUser] = useState(() => {
+    const data = localStorage.getItem('user');
+    return data ? JSON.parse(data) : userInitialState;
+  });
+
   const { loggedIn, name } = user;
 
   useEffect(() => {
@@ -23,7 +26,7 @@ export const UserProvider = ({ children }: PropsChildren) => {
       'user',
       JSON.stringify({ name: name, loggedIn: loggedIn })
     );
-  }, [loggedIn]);
+  }, [loggedIn, localStorage]);
 
   const updateUser = (prop: string, value: string | boolean) => {
     setUser((user: User) => ({
@@ -32,8 +35,13 @@ export const UserProvider = ({ children }: PropsChildren) => {
     }));
   };
 
+  const clearStorage = () => {
+    setUser(userInitialState);
+    localStorage.clear();
+  };
+
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
+    <UserContext.Provider value={{ user, updateUser, clearStorage }}>
       {children}
     </UserContext.Provider>
   );

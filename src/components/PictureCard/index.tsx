@@ -11,7 +11,6 @@ import { FaHeart } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { usePictureContext } from '@/context/PictureContext';
 import { ViewType, PictureCardType } from '@/types';
-
 export default function PictureCard({ picture, view }: PictureCardType) {
   const navigate = useNavigate();
   const isDetail = view === ViewType.DETAIL;
@@ -47,12 +46,13 @@ export default function PictureCard({ picture, view }: PictureCardType) {
         isClosable: true
       });
       addPicture(picture);
+      console.log('color oscuro, disabled')
     }
   };
 
   return (
     <Card
-      maxW="600px"
+      maxW="400px"
       cursor={isDetail ? 'default' : 'pointer'}
       _hover={isDetail ? undefined : { transform: 'scale(1.05)' }}
       onClick={isDetail ? undefined : () => navigate(`/gallery/image/${id}`)}
@@ -78,7 +78,7 @@ export default function PictureCard({ picture, view }: PictureCardType) {
           right="0"
           fontSize="20px"
           _hover={{ transform: 'scale(1.05)' }}
-          icon={<FaHeart color="white" />}
+          icon={<FaHeart color={isFavorites ? "purple" : "white"} />}
           onClick={(e) => handleFavorite(e)}
         />
         <Stack mt="6" spacing="3">

@@ -45,6 +45,7 @@ export interface PropsChildren {
 export type UserContextType = {
   user: User;
   updateUser: (prop: string, value: string | boolean) => void;
+  clearStorage: () => void;
 };
 
 export enum LoginMessage {

@@ -22,7 +22,7 @@ export default function Detail() {
 
   return (
     <>
-      <Box display="flex" flexDirection="row" justifyContent="space-evenly">
+      <Box display="flex" flexDirection="row">
         <IconButton
           isRound={true}
           variant="ghost"

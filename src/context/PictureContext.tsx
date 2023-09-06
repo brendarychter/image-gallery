@@ -6,11 +6,6 @@ const PictureContext = createContext<any>({});
 const initPictures = {
   pictures: [],
 };
-  // pictures: {
-  //   favorites: [],
-  //   gallery: []
-  // }
-
 const getInitialState = () => {
   const pictures = localStorage.getItem("pictures");
   return pictures ? JSON.parse(pictures) : initPictures;

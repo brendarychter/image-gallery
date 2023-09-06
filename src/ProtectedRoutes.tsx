@@ -1,9 +1,10 @@
 import { Outlet, Navigate, useLocation } from 'react-router';
 import { Sidebar } from '@/components';
+import { useUserContext } from '@/context/UserContext';
 
 const useAuth = () => {
-  const storage = JSON.parse(localStorage.getItem('user')!);
-  return storage === null ? false : storage.loggedIn;
+  const { user } = useUserContext();
+  return user.loggedIn;
 };
 
 const ProtectedRoutes = () => {
