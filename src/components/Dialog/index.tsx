@@ -22,7 +22,7 @@ export default function Dialog() {
           <ModalHeader>Borrar imagen de mis favoritos</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            ¿Desea la imagen?
+            ¿Desea borrar la imagen?
           </ModalBody>
           <ModalFooter>
             <Button colorScheme='purple.700' mr={3} onClick={onClose}>

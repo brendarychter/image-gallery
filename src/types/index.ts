@@ -24,16 +24,6 @@ export interface Picture {
   thumbnail: string;
 }
 
-export interface PictureCardType {
-  picture: Picture,
-  view?: string
-}
-
-export interface PictureGridType {
-  pictures: Picture[],
-  view?: string
-}
-
 export interface Pictures {
   pictures: Picture[];
 }
@@ -51,10 +41,4 @@ export type UserContextType = {
 export enum LoginMessage {
   ERROR = 'Verifique los datos ingresados',
   SUCCESS = 'Login exitoso! Ingresando...'
-}
-
-export enum ViewType {
-  DETAIL = 'detail',
-  GALLERY = 'gallery',
-  FAVORITES = 'favorites'
 }

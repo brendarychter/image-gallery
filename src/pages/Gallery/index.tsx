@@ -42,7 +42,6 @@ export default function Gallery() {
         {pictures && pictures.length > 0 ? (
           <PictureGrid pictures={pictures} />
         ) : (
-          // {/* TODO: mensaje de no hay imagenes para mostrar */}
           <div>no hay imagenes para mostrar, probar mas tarde</div>
         )}
       </InfiniteScroll>

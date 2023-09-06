@@ -4,7 +4,6 @@ import { getPicture } from '@/api';
 import { PictureCard } from '@/components';
 import { Box, IconButton, Spinner } from '@chakra-ui/react';
 import { FaArrowLeft } from 'react-icons/fa';
-import { ViewType } from '@/types';
 import { usePictureContext } from '@/context/PictureContext';
 
 export default function Detail() {
@@ -33,7 +32,7 @@ export default function Detail() {
           icon={<FaArrowLeft color="white" />}
           onClick={() => navigate(-1)}
         />
-        {data && <PictureCard picture={data} view={ViewType.DETAIL} />}
+        {data && <PictureCard {...data} />}
       </Box>
     </>
   );
