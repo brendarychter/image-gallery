@@ -7,31 +7,30 @@ import {
   ModalBody,
   ModalCloseButton,
   Button
-} from '@chakra-ui/react'
-import { useDisclosure } from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { useDialogContext } from '@/context/DialogContext';
 
 export default function Dialog() {
-  const { isOpen, onClose } = useDisclosure()
+  const { toggleDialog, isDialogOpen, executeAction, pictureId } = useDialogContext();
+
   return (
     <>
-      {/* <Button onClick={onOpen}>Open Modal</Button> */}
-
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isDialogOpen} onClose={(toggleDialog)}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Borrar imagen de mis favoritos</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            ¿Desea borrar la imagen?
-          </ModalBody>
+          <ModalBody>¿Desea continuar?</ModalBody>
           <ModalFooter>
-            <Button colorScheme='purple.700' mr={3} onClick={onClose}>
-              Close
+            <Button color="white" mr={3} onClick={() => toggleDialog()}>
+              Cerrar
             </Button>
-            <Button colorScheme='red'>Borrar imagen</Button>
+            <Button colorScheme="red" onClick={() => executeAction(pictureId)}>
+              Borrar imagen
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }

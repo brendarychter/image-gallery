@@ -1,9 +1,14 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { Picture, PropsChildren } from '@/types';
-
-const PictureContext = createContext<any>({});
+import { Picture, PictureContextType, PropsChildren } from '@/types';
 
 const initFavorites: Picture[] = [];
+
+const PictureContext = createContext<PictureContextType>({
+  addPicture: () => {},
+  removePicture: () => {},
+  favorites: initFavorites,
+  favoriteIdsSet: new Set<string>()
+});
 
 const getInitialState = () => {
   const favorites = localStorage.getItem('favorites');

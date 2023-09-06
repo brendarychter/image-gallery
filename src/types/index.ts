@@ -38,6 +38,21 @@ export type UserContextType = {
   clearStorage: () => void;
 };
 
+export type PictureContextType = {
+  addPicture: (prop: Picture)=> void;
+  removePicture: (prop: string) => void;
+  favorites: Picture[];
+  favoriteIdsSet: any;
+};
+
+export type DialogContextType = {
+  isDialogOpen: boolean;
+  toggleDialog: () => void;
+  pictureId: string
+  executeAction: (id: string) => void;
+  updatePictureId: (id: string) => void;
+};
+
 export enum LoginMessage {
   ERROR = 'Verifique los datos ingresados',
   SUCCESS = 'Login exitoso! Ingresando...'

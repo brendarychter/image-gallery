@@ -11,6 +11,7 @@ import {
 import { FaHeart } from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { usePictureContext } from '@/context/PictureContext';
+import { useDialogContext } from '@/context/DialogContext';
 import { Picture } from '@/types';
 import fallback from '@/assets/fallback.png';
 
@@ -31,15 +32,18 @@ export default function PictureCard(picture: Picture) {
   const { id, author, width, height, thumbnail, download_url, favorite } =
     picture;
 
-  const { addPicture, removePicture } = usePictureContext();
+  const { addPicture } = usePictureContext();
+  const { toggleDialog, updatePictureId } = useDialogContext();
+
+  console.log(favorite)
 
   const handleFavorite = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
     if (favorite) {
-      removePicture(id);
-      console.log('show alert');
+      updatePictureId(id)
+      toggleDialog();
     } else {
       toast({
         title: 'Imagen agregada a Mis favoritas',
