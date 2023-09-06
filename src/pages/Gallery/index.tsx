@@ -3,12 +3,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '@chakra-ui/react';
 import { PictureGrid } from '@/components';
 import { getPictures } from '@/api';
+import { usePictureContext } from '@/context/PictureContext';
 
 export default function Gallery() {
+  const { favoriteIdsSet } = usePictureContext();
   const { isLoading, isError, error, data, hasNextPage, fetchNextPage } =
     useInfiniteQuery(
       ['pictures'],
-      ({ pageParam = 1 }) => getPictures(pageParam),
+      ({ pageParam = 1 }) => getPictures(pageParam, favoriteIdsSet),
       {
         getNextPageParam: (lastPage, allPages) => {
           const nextPage =
@@ -37,7 +39,7 @@ export default function Gallery() {
         hasMore={!!hasNextPage}
         loader={<Spinner />}
       >
-        {pictures ? (
+        {pictures && pictures.length > 0 ? (
           <PictureGrid pictures={pictures} />
         ) : (
           // {/* TODO: mensaje de no hay imagenes para mostrar */}

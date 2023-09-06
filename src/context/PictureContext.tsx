@@ -3,36 +3,41 @@ import { Picture, PropsChildren } from '@/types';
 
 const PictureContext = createContext<any>({});
 
-const initPictures = {
-  pictures: [],
-};
+const initFavorites: Picture[] = [];
+
 const getInitialState = () => {
-  const pictures = localStorage.getItem("pictures");
-  return pictures ? JSON.parse(pictures) : initPictures;
+  const favorites = localStorage.getItem('favorites');
+  return favorites ? JSON.parse(favorites) : initFavorites;
 };
 
 export const PictureProvider = ({ children }: PropsChildren) => {
-  const [pictures, setPictures] = useState(getInitialState);
+  const [favorites, setFavorites] = useState(getInitialState);
+  const [favoriteIdsSet, setFavoriteIdsSet] = useState<Set<String>>();
 
   useEffect(() => {
-    localStorage.setItem("pictures", JSON.stringify(pictures));
-  }, [pictures]);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    setFavoriteIdsSet(
+      favorites.length > 0
+        ? new Set(favorites.map((picture: Picture) => picture.id))
+        : undefined
+    );
+  }, [favorites]);
 
   const addPicture = (picture: Picture) =>
-  // deberia chequear si el id no esta aca
-  setPictures((prev: any) => ({
+    setFavorites((prev: Picture[]) => [
       ...prev,
-      pictures: [...prev.pictures, {...picture, favorite: true}],
-    }));
+      { ...picture, favorite: true }
+    ]);
 
   const removePicture = (pictureId: string) =>
-  setPictures((prev: any) => ({
-      ...prev,
-      pictures: prev.pictures.filter((p: Picture) => p.id !== pictureId),
-    }));
+    setFavorites((prev: Picture[]) =>
+      prev.filter((p: Picture) => p.id !== pictureId)
+    );
 
   return (
-    <PictureContext.Provider value={{ addPicture, removePicture, ...pictures }}>
+    <PictureContext.Provider
+      value={{ addPicture, removePicture, favorites, favoriteIdsSet }}
+    >
       {children}
     </PictureContext.Provider>
   );

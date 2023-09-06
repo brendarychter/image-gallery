@@ -4,14 +4,14 @@ export interface User {
   loggedIn: boolean;
 }
 
-export interface RawPicture {
-  id: number;
-  author: string;
-  width: number;
-  height: number;
-  url: string;
-  download_url: string;
-}
+// export interface RawPicture {
+//   id: number;
+//   author: string;
+//   width: number;
+//   height: number;
+//   url: string;
+//   download_url: string;
+// }
 
 export interface Picture {
   id: string;

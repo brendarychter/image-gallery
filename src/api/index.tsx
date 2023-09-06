@@ -1,17 +1,31 @@
 import { Picture } from '@/types';
 
-export const getPictures = (pageParam: number): Promise<Picture[]> =>
+const isFavorite = (set: Set<string>, id: string) => {
+  return set && set.has(id);
+};
+
+export const getPictures = (
+  pageParam: number,
+  set: Set<string>
+): Promise<Picture[]> =>
   fetch(`https://picsum.photos/v2/list/?limit=10&page=${pageParam}`).then(
     (res) =>
       res.json().then((data) => {
         return data.map((picture: Picture) => {
           const { id } = picture;
           picture.thumbnail = `https://picsum.photos/id/${id}/300/200?random=${id}`;
-          picture.favorite = false;
+          picture.favorite = isFavorite(set, id);
           return picture;
         });
       })
   );
 
-export const getPicture = (id: number): Promise<Picture> =>
-  fetch(`https://picsum.photos/id/${id}/info`).then((res) => res.json());
+export const getPicture = (id: number, set: Set<string>): Promise<Picture> =>
+  fetch(`https://picsum.photos/id/${id}/info`).then((res) =>
+    res.json().then((picture: Picture) => {
+      return {
+        ...picture,
+        favorite: isFavorite(set, picture.id)
+      };
+    })
+  );

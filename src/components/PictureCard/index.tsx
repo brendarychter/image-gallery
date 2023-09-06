@@ -8,15 +8,18 @@ import {
   useToast
 } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { usePictureContext } from '@/context/PictureContext';
 import { ViewType, PictureCardType } from '@/types';
+import fallback from '@/assets/fallback.png';
+
 export default function PictureCard({ picture, view }: PictureCardType) {
   const navigate = useNavigate();
-  const isDetail = view === ViewType.DETAIL;
-  const isFavorites = view === ViewType.FAVORITES;
+  const location = useLocation()
+  const isDetail = view === ViewType.DETAIL; //TODO: match con regex
   const toast = useToast();
-  
+  const isGallery = location.pathname.includes(ViewType.GALLERY) //TODO: match con regex
+
   const {
     id,
     author,
@@ -28,14 +31,13 @@ export default function PictureCard({ picture, view }: PictureCardType) {
   } = picture;
 
   const { addPicture, removePicture } = usePictureContext();
-
+  
   // TODO: get vista. si es detail, mostrar
   const handleFavorite = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
     if (favorite) {
-      // TODO: if vista no es gallery
       removePicture(id);
       console.log('show alert');
     } else {
@@ -46,7 +48,6 @@ export default function PictureCard({ picture, view }: PictureCardType) {
         isClosable: true
       });
       addPicture(picture);
-      console.log('color oscuro, disabled')
     }
   };
 
@@ -60,25 +61,28 @@ export default function PictureCard({ picture, view }: PictureCardType) {
       <CardBody position="relative">
         <Image
           src={isDetail ? download_url : thumbnail}
+          fallbackSrc={fallback}
+          crossOrigin="anonymous"
+
           display="block"
           objectFit="cover"
           alt={author}
           borderRadius="lg"
-          loading="lazy"
           width="100%"
           height="200px"
         />
         <IconButton
           isRound={true}
-          variant={isFavorites ? "solid" : "outline"}
+          variant={favorite ? "solid" : "outline"}
+          isDisabled={isGallery && favorite}
           colorScheme="purple"
           aria-label="Favorite"
-          position="absolute"
+          position="absolute" 
           top="0"
           right="0"
           fontSize="20px"
-          _hover={{ transform: 'scale(1.05)' }}
-          icon={<FaHeart color={isFavorites ? "purple" : "white"} />}
+          _hover={(!favorite && !isGallery) ? { transform: 'scale(1.05)' }: undefined}
+          icon={<FaHeart color={favorite ? "purple" : "white"} />}
           onClick={(e) => handleFavorite(e)}
         />
         <Stack mt="6" spacing="3">

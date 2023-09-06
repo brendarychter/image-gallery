@@ -1,5 +1,5 @@
 import { Outlet, Navigate, useLocation } from 'react-router';
-import { Sidebar } from '@/components';
+import { Sidebar, Dialog } from '@/components';
 import { useUserContext } from '@/context/UserContext';
 
 const useAuth = () => {
@@ -14,6 +14,7 @@ const ProtectedRoutes = () => {
     <>
       <Sidebar />
       <Outlet />
+      <Dialog />
     </>
   ) : (
     <Navigate to="/" replace state={{ from: location }} />

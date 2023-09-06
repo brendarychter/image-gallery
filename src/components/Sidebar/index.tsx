@@ -88,7 +88,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         borderBottomColor="white"
         justifyContent="space-between"
       >
-        <Text>Hola {user.name}!</Text>
+        <Text style={{fontWeight: 200}}>Hola {user.name}!</Text>
         <CloseButton display={{ base: 'flex' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -105,6 +105,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         key="Cerrar sesión"
         url="/"
         onClick={() => handleClick(onClose, clearStorage)}
+        style={{position: "absolute", bottom: "1rem", width: "90%"}}
       >
         Cerrar sesión
       </NavItem>

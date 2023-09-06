@@ -5,12 +5,12 @@ import { Text, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 export default function Favorites() {
-  const { pictures } = usePictureContext();
-
+  const { favorites  } = usePictureContext();
+  
   return (
     <>
-      {pictures.length > 0 ? (
-        <PictureGrid pictures={pictures} view={ViewType.FAVORITES} />
+      {favorites && favorites.length > 0 ? (
+        <PictureGrid pictures={favorites} view={ViewType.FAVORITES} />
       ) : (
         <Box>
           <Text display="inline-block">
@@ -18,7 +18,7 @@ export default function Favorites() {
           </Text>
           <Link color="teal.500" to="/gallery">
             {' '}
-            <Text display="inline-block" color="teal.500">
+            <Text display="inline-block" color="purple.300" as='b'>
               Mi galería
             </Text>
           </Link>

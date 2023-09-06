@@ -5,13 +5,15 @@ import { PictureCard } from '@/components';
 import { Box, IconButton, Spinner } from '@chakra-ui/react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { ViewType } from '@/types';
+import { usePictureContext } from '@/context/PictureContext';
 
 export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { favoriteIdsSet } = usePictureContext();
 
   const { data, error, isLoading, isError } = useQuery(['imageInfo', id], () =>
-    getPicture(Number(id))
+    getPicture(Number(id), favoriteIdsSet)
   );
 
   if (isLoading) {
