@@ -3,8 +3,10 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner, Heading } from '@chakra-ui/react';
 import { PictureGrid } from '@/components';
 import { getPictures } from '@/api';
+import { usePictureContext } from '@/context/PictureContext';
 
 export default function Gallery() {
+  const {favorites} = usePictureContext();
 
   const { isLoading, isError, error, data, hasNextPage, fetchNextPage } =
     useInfiniteQuery(
@@ -15,22 +17,22 @@ export default function Gallery() {
           const nextPage =
             lastPage.length === 10 ? allPages.length + 1 : undefined;
           return nextPage;
-        }
+        },
+        select: (rawData) => {
+          const transformedData = {
+            ...rawData,
+            pages: rawData.pages.map((page) =>
+              page.map((todo) =>
+                favorites.some((favorite) => favorite.id === todo.id)
+                  ? { ...todo, favorite: true }
+                  : todo
+              )
+            ),
+          };
+          return transformedData;
+        },
       }
     );
-
-  // if (data) {
-  //   queryClient.setQueryData(['pics'], (prevData: any) => ({
-  //     ...prevData,
-  //     pages: data.pages.map((page) =>
-  //       page.map((todo) =>
-  //         favorites.some((favorite) => favorite.id === todo.id)
-  //           ? { ...todo, favorite: true }
-  //           : todo
-  //       )
-  //     )
-  //   }));
-  // }
 
   const pictures = data?.pages.reduce((prev, page) => {
     return [...prev, ...page];

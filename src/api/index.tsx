@@ -10,7 +10,6 @@ export const getPictures = (pageParam: number): Promise<Picture[]> =>
         return data.map((picture: Picture) => {
           const { id } = picture;
           picture.thumbnail = getThumbnail(id);
-          picture.favorite = false;
           return picture;
         });
       })
