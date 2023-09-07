@@ -11,10 +11,12 @@ import {
   FormControl,
   Text,
   InputRightElement,
+  InputLeftElement,
   Spinner
 } from '@chakra-ui/react';
 import { useUserContext } from '@/context/UserContext';
 import { LoginMessage } from '@/types';
+import { FaUserAlt, FaLock } from 'react-icons/fa';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -60,6 +62,7 @@ export default function Login() {
 
   const handleChange = (prop: string, value: string) => {
     updateUser(prop, value);
+    setMessage('');
   };
 
   return (
@@ -92,14 +95,22 @@ export default function Login() {
               <form onSubmit={(e) => validateAuth(e)}>
                 <Stack spacing={4} p="1rem">
                   <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Usuario"
-                      onChange={(e) => handleChange('name', e.target.value)}
-                    />
+                    <InputGroup>
+                      <InputLeftElement>
+                        <FaUserAlt />
+                      </InputLeftElement>
+                      <Input
+                        type="text"
+                        placeholder="Usuario"
+                        onChange={(e) => handleChange('name', e.target.value)}
+                      />
+                    </InputGroup>
                   </FormControl>
                   <FormControl>
                     <InputGroup>
+                      <InputLeftElement>
+                        <FaLock />
+                      </InputLeftElement>
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Contraseña"
@@ -124,10 +135,12 @@ export default function Login() {
                   >
                     Login
                   </Button>
-                  <Text align="center">{message}</Text>
                 </Stack>
               </form>
             </Box>
+            <Text align="center" display="block" height="20px">
+              {message}
+            </Text>
           </Stack>
         </Flex>
       )}

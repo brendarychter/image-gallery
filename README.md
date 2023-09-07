@@ -1,27 +1,45 @@
-# React + TypeScript + Vite
+# Image gallery app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An application that shows images and allows to store the favorite ones. Try it [here](https://image-gallery-plum-three.vercel.app/)
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project was made with `React + Typescript + Vite, using React Query and Chakra-ui`, and deployed with `Vercel`
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Use Node version 20.3.1 and React version 18.2.0
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+Clone project to local
+
+```bash
+  git clone https://github.com/brendarychter/image-gallery
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Go to the project directory
+
+```bash
+  cd image-gallery
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+## Next improvements
+
+Tests with Vitest
+
+Add fixed button to go up when the user is scrolling images with the infinite scroll
+
+Add style animations and transitions

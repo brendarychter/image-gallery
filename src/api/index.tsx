@@ -20,8 +20,7 @@ export const getPicture = (id: number): Promise<Picture> =>
     res.json().then((picture: Picture) => {
       return {
         ...picture,
-        thumbnail: getThumbnail(picture.id),
-        favorite: false
+        thumbnail: getThumbnail(picture.id)
       };
     })
   );
