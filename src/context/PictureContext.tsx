@@ -19,6 +19,8 @@ const getInitialState = () => {
 export const PictureProvider = ({ children }: PropsChildren) => {
   const [favorites, setFavorites] = useState(getInitialState);
   const [favoriteIdsSet, setFavoriteIdsSet] = useState<Set<string>>();
+  const [id, setId] = useState<string>();
+  
   const toast = useToast();
 
   useEffect(() => {
@@ -50,6 +52,10 @@ export const PictureProvider = ({ children }: PropsChildren) => {
     }
   };
 
+  const updateId = (id: string) => {
+    setId(id);
+  };
+
   const removePicture = (pictureId: string) => {
     console.log('existe, borrar');
     if (favorites.find((item: Picture) => item.id === pictureId)) {
@@ -62,7 +68,7 @@ export const PictureProvider = ({ children }: PropsChildren) => {
 
   return (
     <PictureContext.Provider
-      value={{ addPicture, removePicture, favorites, favoriteIdsSet }}
+      value={{ addPicture, removePicture, favorites, favoriteIdsSet, updateId, id }}
     >
       {children}
     </PictureContext.Provider>
