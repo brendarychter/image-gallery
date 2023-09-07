@@ -5,7 +5,9 @@ import {
   Stack,
   Heading,
   IconButton,
-  Button
+  Button,
+  Text,
+  Box
 } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -37,7 +39,7 @@ export default function PictureCard(picture: Picture) {
   ) => {
     e.stopPropagation();
     if (favorite) {
-      updateId(id)
+      updateId(id);
       toggleDialog();
     } else {
       addPicture(picture);
@@ -47,6 +49,7 @@ export default function PictureCard(picture: Picture) {
   return (
     <Card
       maxW="400px"
+      width="100%"
       cursor={isDetail ? 'default' : 'pointer'}
       _hover={isDetail ? undefined : { transform: 'scale(1.05)' }}
       onClick={isDetail ? undefined : () => navigate(`/gallery/image/${id}`)}
@@ -79,13 +82,22 @@ export default function PictureCard(picture: Picture) {
           icon={<FaHeart color={favorite ? 'purple' : 'white'} />}
           onClick={(e) => handleFavorite(e)}
         />
-        <Stack mt="6" spacing="3">
+        <Stack mt="6" spacing="3" justifyContent="center">
           <Heading size="md">{author}</Heading>
         </Stack>
         {isDetail && (
-          <Stack mt="6" spacing="3">
-            <Heading size="md">Alto: {width}</Heading>
-            <Heading size="md">Largo: {height}</Heading>
+          <Stack
+            mt="6"
+            spacing="3"
+            display="flex"
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Box>
+              <Text size="sm">Alto: {width}</Text>
+              <Text size="sm">Largo: {height}</Text>
+            </Box>
             <Link
               to={download_url}
               download={author}

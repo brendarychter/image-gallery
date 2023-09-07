@@ -10,7 +10,8 @@ import {
   DrawerContent,
   useDisclosure,
   BoxProps,
-  FlexProps
+  FlexProps,
+  Heading
 } from '@chakra-ui/react';
 import { FiMenu } from 'react-icons/fi';
 import { IconType } from 'react-icons';
@@ -88,7 +89,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         borderBottomColor="white"
         justifyContent="space-between"
       >
-        <Text style={{fontWeight: 200}}>Hola {user.name}!</Text>
+        <Text style={{ fontWeight: 200 }}>Hola {user.name}!</Text>
         <CloseButton display={{ base: 'flex' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -105,7 +106,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         key="Cerrar sesión"
         url="/"
         onClick={() => handleClick(onClose, clearStorage)}
-        style={{position: "absolute", bottom: "1rem", width: "90%"}}
+        style={{ position: 'absolute', bottom: '1rem', width: '90%' }}
       >
         Cerrar sesión
       </NavItem>
@@ -118,7 +119,7 @@ const NavItem = ({ url, icon, children, ...rest }: NavItemProps) => {
     <NavLink
       to={url}
       style={({ isActive }) => {
-        return { fontWeight: isActive ? 800 : 400};
+        return { fontWeight: isActive ? 800 : 400 };
       }}
     >
       <Box style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
@@ -160,6 +161,7 @@ const Nav = ({ onOpen, ...rest }: NavProps) => {
       height="20"
       alignItems="center"
       justifyContent="flex-start"
+      width="100%"
       {...rest}
     >
       <IconButton
@@ -168,6 +170,9 @@ const Nav = ({ onOpen, ...rest }: NavProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
+      <Heading as="h1" size="5sm" ml="3%" color="purple.100" display="flex" width="100%" >
+        Image gallery app
+      </Heading>
     </Flex>
   );
 };

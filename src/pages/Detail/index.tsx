@@ -22,7 +22,13 @@ export default function Detail() {
   if (isError) return <h4>{`${error}` as string}</h4>;
   return (
     <>
-      <Box display="flex" flexDirection="row">
+      <Box
+        display="flex"
+        flexDirection="row"
+        padding="1rem"
+        alignItems="center"
+        justifyContent="center"
+      >
         <IconButton
           isRound={true}
           variant="ghost"
@@ -30,6 +36,7 @@ export default function Detail() {
           aria-label="Favorite"
           icon={<FaArrowLeft color="white" />}
           onClick={() => navigate(-1)}
+          mr="3%"
         />
         {data && <PictureCard {...data} />}
       </Box>

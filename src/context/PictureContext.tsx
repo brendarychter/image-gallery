@@ -34,6 +34,10 @@ export const PictureProvider = ({ children }: PropsChildren) => {
     );
   }, [favorites]);
 
+  const updateId = (id: string) => {
+    setId(id);
+  };
+
   const showToast = (title: string, status: 'info' | 'success') => {
     toast({
       title,
@@ -43,9 +47,13 @@ export const PictureProvider = ({ children }: PropsChildren) => {
     });
   };
 
+
+  const findImage = (pictureId: string) =>{
+    return favorites.find((item: Picture) => item.id === pictureId)
+  }
+
   const addPicture = (picture: Picture) => {
-    if (!favorites.find((item: Picture) => item.id === picture.id)) {
-      console.log('no encontro, agregar');
+    if (!findImage(picture.id)) {
       setFavorites((prev: Picture[]) => [
         ...prev,
         { ...picture, favorite: true }
@@ -54,13 +62,8 @@ export const PictureProvider = ({ children }: PropsChildren) => {
     }
   };
 
-  const updateId = (id: string) => {
-    setId(id);
-  };
-
   const removePicture = (pictureId: string) => {
-    console.log('existe, borrar');
-    if (favorites.find((item: Picture) => item.id === pictureId)) {
+    if (findImage(pictureId)) {
       setFavorites((prev: Picture[]) =>
         prev.filter((p: Picture) => p.id !== pictureId)
       );

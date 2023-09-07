@@ -4,13 +4,7 @@ const config: ThemeConfig = {
   initialColorMode: 'dark',
   useSystemColorMode: true
 };
-const custom = {
-  colors: {
-    purple: {
-      500: '#805AD5',
-    }
-  }
-};
-const theme = extendTheme({ config, custom });
+
+const theme = extendTheme({ config });
 
 export default theme;
