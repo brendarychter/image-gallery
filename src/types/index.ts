@@ -48,9 +48,6 @@ export type PictureContextType = {
 export type DialogContextType = {
   isDialogOpen: boolean;
   toggleDialog: () => void;
-  pictureId: string
-  executeAction: (id: string) => void;
-  updatePictureId: (id: string) => void;
 };
 
 export enum LoginMessage {

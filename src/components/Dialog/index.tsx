@@ -9,13 +9,18 @@ import {
   Button
 } from '@chakra-ui/react';
 import { useDialogContext } from '@/context/DialogContext';
+import { usePictureContext } from '@/context/PictureContext';
 
 export default function Dialog() {
-  const { toggleDialog, isDialogOpen, executeAction, pictureId } = useDialogContext();
-
+  const { toggleDialog, isDialogOpen } = useDialogContext();
+  const { removePicture, id } = usePictureContext();
+  const handleClick = () => {
+    removePicture(id);
+    toggleDialog();
+  };
   return (
     <>
-      <Modal isOpen={isDialogOpen} onClose={(toggleDialog)}>
+      <Modal isOpen={isDialogOpen} onClose={toggleDialog}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Borrar imagen de mis favoritos</ModalHeader>
@@ -25,7 +30,10 @@ export default function Dialog() {
             <Button color="white" mr={3} onClick={() => toggleDialog()}>
               Cerrar
             </Button>
-            <Button colorScheme="red" onClick={() => executeAction(pictureId)}>
+            <Button
+              colorScheme="red"
+              onClick={() => handleClick()}
+            >
               Borrar imagen
             </Button>
           </ModalFooter>

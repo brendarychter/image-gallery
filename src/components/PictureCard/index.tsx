@@ -23,22 +23,21 @@ export default function PictureCard(picture: Picture) {
   const navigate = useNavigate();
   const location = useLocation();
 
-
   const isGallery = regexPath.gallery.test(location.pathname);
   const isDetail = regexPath.detail.test(location.pathname);
 
   const { id, author, width, height, thumbnail, download_url, favorite } =
     picture;
 
-  const { addPicture } = usePictureContext();
-  const { toggleDialog, updatePictureId } = useDialogContext();
+  const { addPicture, updateId } = usePictureContext();
+  const { toggleDialog } = useDialogContext();
 
   const handleFavorite = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
     if (favorite) {
-      updatePictureId(id)
+      updateId(id)
       toggleDialog();
     } else {
       addPicture(picture);
