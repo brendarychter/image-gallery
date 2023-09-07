@@ -17,7 +17,14 @@ export default function Detail() {
   );
 
   const favorite = favorites.some((picture) => picture.id === data?.id);
-  queryClient.setQueryData(['detail', id], { ...data, favorite });
+  queryClient.setQueryData(['detail', id ], (oldData: any) =>
+    oldData
+      ? {
+          ...oldData,
+          favorite
+        }
+      : oldData
+  );
 
   if (isLoading) {
     return <Spinner />;
