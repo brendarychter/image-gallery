@@ -16,10 +16,8 @@ export default function Detail() {
     getPicture(Number(id))
   );
 
-  if (data) {
-    const favorite = favorites.some((picture) => picture.id === data.id);
-    queryClient.setQueryData(['detail', id], { ...data, favorite });
-  }
+  const favorite = favorites.some((picture) => picture.id === data?.id);
+  queryClient.setQueryData(['detail', id], { ...data, favorite });
 
   if (isLoading) {
     return <Spinner />;
