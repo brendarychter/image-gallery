@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { Picture, PictureContextType, PropsChildren } from '@/types';
+import { useToast } from '@chakra-ui/react';
 
 const initFavorites: Picture[] = [];
 
@@ -17,7 +18,8 @@ const getInitialState = () => {
 
 export const PictureProvider = ({ children }: PropsChildren) => {
   const [favorites, setFavorites] = useState(getInitialState);
-  const [favoriteIdsSet, setFavoriteIdsSet] = useState<Set<String>>();
+  const [favoriteIdsSet, setFavoriteIdsSet] = useState<Set<string>>();
+  const toast = useToast();
 
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -28,16 +30,35 @@ export const PictureProvider = ({ children }: PropsChildren) => {
     );
   }, [favorites]);
 
-  const addPicture = (picture: Picture) =>
-    setFavorites((prev: Picture[]) => [
-      ...prev,
-      { ...picture, favorite: true }
-    ]);
+  const showToast = (title: string, status: 'info' | 'success') => {
+    toast({
+      title,
+      status,
+      duration: 3000,
+      isClosable: true
+    });
+  };
 
-  const removePicture = (pictureId: string) =>
-    setFavorites((prev: Picture[]) =>
-      prev.filter((p: Picture) => p.id !== pictureId)
-    );
+  const addPicture = (picture: Picture) => {
+    if (!favorites.find((item: Picture) => item.id === picture.id)) {
+      console.log('no encontro, agregar');
+      setFavorites((prev: Picture[]) => [
+        ...prev,
+        { ...picture, favorite: true }
+      ]);
+      showToast('Imagen agregada a Mis favoritas', 'success');
+    }
+  };
+
+  const removePicture = (pictureId: string) => {
+    console.log('existe, borrar');
+    if (favorites.find((item: Picture) => item.id === pictureId)) {
+      setFavorites((prev: Picture[]) =>
+        prev.filter((p: Picture) => p.id !== pictureId)
+      );
+      showToast('Imagen eliminada de Mis favoritas', 'info');
+    }
+  };
 
   return (
     <PictureContext.Provider

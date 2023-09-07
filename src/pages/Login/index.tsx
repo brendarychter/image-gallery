@@ -65,7 +65,14 @@ export default function Login() {
   return (
     <>
       {spinner ? (
-        <Spinner />
+        <Box
+          height="full"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Spinner />
+        </Box>
       ) : (
         <Flex
           flexDirection="column"

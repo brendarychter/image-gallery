@@ -1,8 +1,10 @@
 import { Picture } from '@/types';
 
 const isFavorite = (set: Set<string>, id: string) => {
-  return set && set.has(id);
+  return set && set.has(id) ? true : false;
 };
+
+const getThumbnail = (id: string) => `https://picsum.photos/id/${id}/300/200?random=${id}`
 
 export const getPictures = (
   pageParam: number,
@@ -13,7 +15,7 @@ export const getPictures = (
       res.json().then((data) => {
         return data.map((picture: Picture) => {
           const { id } = picture;
-          picture.thumbnail = `https://picsum.photos/id/${id}/300/200?random=${id}`;
+          picture.thumbnail = getThumbnail(id);
           picture.favorite = isFavorite(set, id);
           return picture;
         });
@@ -25,6 +27,7 @@ export const getPicture = (id: number, set: Set<string>): Promise<Picture> =>
     res.json().then((picture: Picture) => {
       return {
         ...picture,
+        thumbnail: getThumbnail(picture.id),
         favorite: isFavorite(set, picture.id)
       };
     })

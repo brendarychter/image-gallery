@@ -20,7 +20,6 @@ export default function Detail() {
   }
 
   if (isError) return <h4>{`${error}` as string}</h4>;
-
   return (
     <>
       <Box display="flex" flexDirection="row">

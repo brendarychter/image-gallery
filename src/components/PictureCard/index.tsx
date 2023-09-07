@@ -5,7 +5,6 @@ import {
   Stack,
   Heading,
   IconButton,
-  useToast,
   Button
 } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
@@ -24,7 +23,6 @@ export default function PictureCard(picture: Picture) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const toast = useToast();
 
   const isGallery = regexPath.gallery.test(location.pathname);
   const isDetail = regexPath.detail.test(location.pathname);
@@ -35,8 +33,6 @@ export default function PictureCard(picture: Picture) {
   const { addPicture } = usePictureContext();
   const { toggleDialog, updatePictureId } = useDialogContext();
 
-  console.log(favorite)
-
   const handleFavorite = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -45,12 +41,6 @@ export default function PictureCard(picture: Picture) {
       updatePictureId(id)
       toggleDialog();
     } else {
-      toast({
-        title: 'Imagen agregada a Mis favoritas',
-        status: 'success',
-        duration: 5000,
-        isClosable: true
-      });
       addPicture(picture);
     }
   };

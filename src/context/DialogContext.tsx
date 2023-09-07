@@ -21,7 +21,7 @@ export const DialogProvider = ({ children }: PropsChildren) => {
 
   const executeAction = () => {
     removePicture(pictureId);
-    setDialogOpen(!isDialogOpen);
+    toggleDialog();
   };
 
   const updatePictureId = (id: string) => {
