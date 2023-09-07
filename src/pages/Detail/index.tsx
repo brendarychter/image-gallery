@@ -12,19 +12,16 @@ export default function Detail() {
   const { favorites } = usePictureContext();
   const queryClient = useQueryClient();
 
-  const { data, error, isLoading, isError } = useQuery(['detail', id], () =>
-    getPicture(Number(id))
+  const { data, error, isLoading, isError } = useQuery(
+    ['detail', id],
+    () => getPicture(Number(id)),
+    {
+      enabled: false
+    }
   );
 
   const favorite = favorites.some((picture) => picture.id === data?.id);
-  queryClient.setQueryData(['detail', id ], (oldData: any) =>
-    oldData
-      ? {
-          ...oldData,
-          favorite
-        }
-      : oldData
-  );
+  queryClient.setQueryData(['detail', id], { ...data, favorite });
 
   if (isLoading) {
     return <Spinner />;
