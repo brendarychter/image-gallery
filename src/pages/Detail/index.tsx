@@ -2,27 +2,30 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPicture } from '@/api';
 import { PictureCard } from '@/components';
-import { Box, IconButton, Spinner } from '@chakra-ui/react';
+import { Box, IconButton, Spinner, Heading } from '@chakra-ui/react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { usePictureContext } from '@/context/PictureContext';
-import { useEffect } from 'react';
 
 export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { updateId, data, error, isLoading, isError } = usePictureContext();
-  
-  useEffect(() => {
-    updateId(id)
+  const { favorites } = usePictureContext();
+  const queryClient = useQueryClient();
 
-  }, [id, updateId]);
+  const { data, error, isLoading, isError } = useQuery(['detail', id], () =>
+    getPicture(Number(id))
+  );
 
+  if (data) {
+    const favorite = favorites.some((picture) => picture.id === data.id);
+    queryClient.setQueryData(['detail', id], { ...data, favorite });
+  }
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  if (isError) return <h4>{`${error}` as string}</h4>;
+  if (isError) return <Heading size="sm">{`${error}` as string}</Heading>;
 
   return (
     <>
@@ -30,7 +33,7 @@ export default function Detail() {
         display="flex"
         flexDirection="row"
         padding="1rem"
-        alignItems="center"
+        alignItems="flex-start"
         justifyContent="center"
       >
         <IconButton

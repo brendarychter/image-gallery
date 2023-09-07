@@ -4,15 +4,6 @@ export interface User {
   loggedIn: boolean;
 }
 
-// export interface RawPicture {
-//   id: number;
-//   author: string;
-//   width: number;
-//   height: number;
-//   url: string;
-//   download_url: string;
-// }
-
 export interface Picture {
   id: string;
   author: string;
@@ -27,7 +18,6 @@ export interface Picture {
 export interface Pictures {
   pictures: Picture[];
 }
-
 export interface PropsChildren {
   children?: React.ReactNode;
 }
@@ -39,12 +29,11 @@ export type UserContextType = {
 };
 
 export type PictureContextType = {
+  id: string;
+  favorites: Picture[];
   addPicture: (prop: Picture)=> void;
   removePicture: (prop: string) => void;
-  favorites: Picture[];
-  favoriteIdsSet: any;
   updateId: (prop: string) => void;
-  id: string;
 };
 
 export type DialogContextType = {

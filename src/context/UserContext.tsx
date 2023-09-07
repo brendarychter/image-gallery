@@ -26,7 +26,7 @@ export const UserProvider = ({ children }: PropsChildren) => {
       'user',
       JSON.stringify({ name: name, loggedIn: loggedIn })
     );
-  }, [loggedIn, localStorage]);
+  }, [name, loggedIn]);
 
   const updateUser = (prop: string, value: string | boolean) => {
     setUser((user: User) => ({

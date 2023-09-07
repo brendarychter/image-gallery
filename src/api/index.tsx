@@ -1,14 +1,9 @@
 import { Picture } from '@/types';
 
-const isFavorite = (set: Set<string>, id: string) => {
-  return set && set.has(id) ? true : false;
-};
-
 const getThumbnail = (id: string) => `https://picsum.photos/id/${id}/300/200?random=${id}`
 
 export const getPictures = (
   pageParam: number,
-  set: Set<string>
 ): Promise<Picture[]> =>
   fetch(`https://picsum.photos/v2/list/?limit=10&page=${pageParam}`).then(
     (res) =>
@@ -16,7 +11,7 @@ export const getPictures = (
         return data.map((picture: Picture) => {
           const { id } = picture;
           picture.thumbnail = getThumbnail(id);
-          picture.favorite = isFavorite(set, id);
+          picture.favorite = false;
           return picture;
         });
       })

@@ -1,16 +1,18 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, Heading } from '@chakra-ui/react';
 import { PictureGrid } from '@/components';
 import { getPictures } from '@/api';
 import { usePictureContext } from '@/context/PictureContext';
 
 export default function Gallery() {
-  const { favoriteIdsSet } = usePictureContext();
+  const { favorites } = usePictureContext();
+  const queryClient = useQueryClient();
+
   const { isLoading, isError, error, data, hasNextPage, fetchNextPage } =
     useInfiniteQuery(
-      ['pictures'],
-      ({ pageParam = 1 }) => getPictures(pageParam, favoriteIdsSet),
+      ['pics'],
+      ({ pageParam = 1 }) => getPictures(pageParam),
       {
         getNextPageParam: (lastPage, allPages) => {
           const nextPage =
@@ -20,16 +22,30 @@ export default function Gallery() {
       }
     );
 
-  if (isLoading) {
-    return <Spinner />;
+    console.log(data)
+  if (data) {
+    queryClient.setQueryData(['pics'], (prevData: any) => ({
+      ...prevData,
+      pages: data.pages.map((page) =>
+        page.map((todo) =>
+          favorites.some((favorite) => favorite.id === todo.id)
+            ? { ...todo, favorite: true }
+            : todo
+        )
+      )
+    }));
   }
-
-  // TODO: error component
-  if (isError) return <h4>{`${error}` as string}</h4>;
 
   const pictures = data?.pages.reduce((prev, page) => {
     return [...prev, ...page];
   }, []);
+
+  if (isLoading) {
+    return <Spinner m="20px"/>;
+  }
+
+  if (isError) return <Heading size="sm">{`${error}` as string}</Heading>;
+
 
   return (
     <>

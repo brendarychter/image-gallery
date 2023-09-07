@@ -64,7 +64,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Mis favoritas', icon: FaHeart, url: '/favorites' }
 ];
 
-const handleClick = (onClose: Function, action?: Function) => {
+const handleClick = (onClose: () => void, action?: () => void) => {
   onClose();
   if (action) action();
 };
@@ -158,7 +158,7 @@ const Nav = ({ onOpen, ...rest }: NavProps) => {
     <Flex
       ml={{ base: 0 }}
       px={{ base: 4 }}
-      height="20"
+      height="50px"
       alignItems="center"
       justifyContent="flex-start"
       width="100%"
