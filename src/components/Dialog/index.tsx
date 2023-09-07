@@ -14,6 +14,7 @@ import { usePictureContext } from '@/context/PictureContext';
 export default function Dialog() {
   const { toggleDialog, isDialogOpen } = useDialogContext();
   const { removePicture, id } = usePictureContext();
+  
   const handleClick = () => {
     removePicture(id);
     toggleDialog();

@@ -43,6 +43,8 @@ export type PictureContextType = {
   removePicture: (prop: string) => void;
   favorites: Picture[];
   favoriteIdsSet: any;
+  updateId: (prop: string) => void;
+  id: string;
 };
 
 export type DialogContextType = {

@@ -8,7 +8,9 @@ const PictureContext = createContext<PictureContextType>({
   addPicture: () => {},
   removePicture: () => {},
   favorites: initFavorites,
-  favoriteIdsSet: new Set<string>()
+  favoriteIdsSet: new Set<string>(),
+  updateId: () => {},
+  id: ''
 });
 
 const getInitialState = () => {
@@ -19,7 +21,7 @@ const getInitialState = () => {
 export const PictureProvider = ({ children }: PropsChildren) => {
   const [favorites, setFavorites] = useState(getInitialState);
   const [favoriteIdsSet, setFavoriteIdsSet] = useState<Set<string>>();
-  const [id, setId] = useState<string>();
+  const [id, setId] = useState<string>('');
   
   const toast = useToast();
 
