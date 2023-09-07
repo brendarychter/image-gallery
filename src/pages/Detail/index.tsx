@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPicture } from '@/api';
 import { PictureCard } from '@/components';
@@ -10,17 +10,16 @@ export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { favorites } = usePictureContext();
-  const queryClient = useQueryClient();
 
-  const { data, error, isLoading, isError, isSuccess } = useQuery(
-    ['detail', id],
-    () => getPicture(Number(id))
+  const { data, error, isLoading, isError } = useQuery(['detail', id], () =>
+    getPicture(Number(id)), {
+      select: (rawData) => {
+        const favorite = favorites.some((picture) => picture.id === rawData?.id);
+        return { ...rawData, favorite }
+      },
+    }
   );
 
-  if (isSuccess) {
-    const favorite = favorites.some((picture) => picture.id === data?.id);
-    queryClient.setQueryData(['detail', id], { ...data, favorite });
-  }
   if (isLoading) {
     return <Spinner />;
   }

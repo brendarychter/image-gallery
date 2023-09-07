@@ -1,10 +1,9 @@
 import { Picture } from '@/types';
 
-const getThumbnail = (id: string) => `https://picsum.photos/id/${id}/300/200?random=${id}`
+const getThumbnail = (id: string) =>
+  `https://picsum.photos/id/${id}/300/200?random=${id}`;
 
-export const getPictures = (
-  pageParam: number,
-): Promise<Picture[]> =>
+export const getPictures = (pageParam: number): Promise<Picture[]> =>
   fetch(`https://picsum.photos/v2/list/?limit=10&page=${pageParam}`).then(
     (res) =>
       res.json().then((data) => {
@@ -23,6 +22,7 @@ export const getPicture = (id: number): Promise<Picture> =>
       return {
         ...picture,
         thumbnail: getThumbnail(picture.id),
+        favorite: false
       };
     })
   );
