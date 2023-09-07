@@ -22,13 +22,12 @@ export const getPictures = (
       })
   );
 
-export const getPicture = (id: number, set: Set<string>): Promise<Picture> =>
+export const getPicture = (id: number): Promise<Picture> =>
   fetch(`https://picsum.photos/id/${id}/info`).then((res) =>
     res.json().then((picture: Picture) => {
       return {
         ...picture,
         thumbnail: getThumbnail(picture.id),
-        favorite: isFavorite(set, picture.id)
       };
     })
   );

@@ -1,25 +1,29 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPicture } from '@/api';
 import { PictureCard } from '@/components';
 import { Box, IconButton, Spinner } from '@chakra-ui/react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { usePictureContext } from '@/context/PictureContext';
+import { useEffect } from 'react';
 
 export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { favoriteIdsSet } = usePictureContext();
+  const { updateId, data, error, isLoading, isError } = usePictureContext();
+  
+  useEffect(() => {
+    updateId(id)
 
-  const { data, error, isLoading, isError } = useQuery(['imageInfo', id], () =>
-    getPicture(Number(id), favoriteIdsSet)
-  );
+  }, [id, updateId]);
+
 
   if (isLoading) {
     return <Spinner />;
   }
 
   if (isError) return <h4>{`${error}` as string}</h4>;
+
   return (
     <>
       <Box
