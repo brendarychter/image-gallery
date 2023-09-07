@@ -1,25 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPicture } from '@/api';
 import { PictureCard } from '@/components';
 import { Box, IconButton, Spinner, Heading } from '@chakra-ui/react';
 import { FaArrowLeft } from 'react-icons/fa';
-// import { usePictureContext } from '@/context/PictureContext';
+import { usePictureContext } from '@/context/PictureContext';
 
 export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  // const { favorites } = usePictureContext();
-  // const queryClient = useQueryClient();
+  const { favorites } = usePictureContext();
+  const queryClient = useQueryClient();
 
   const { data, error, isLoading, isError } = useQuery(['detail', id], () =>
     getPicture(Number(id))
   );
 
-  // if (data) {
-  //   const favorite = favorites.some((picture) => picture.id === data.id);
-  //   queryClient.setQueryData(['detail', id], { ...data, favorite });
-  // }
+  if (data) {
+    const favorite = favorites.some((picture) => picture.id === data.id);
+    queryClient.setQueryData(['detail', id], { ...data, favorite });
+  }
 
   if (isLoading) {
     return <Spinner />;
